@@ -27,7 +27,8 @@ from threading import Thread
 
 app = Flask('')
 
-TOKEN = os.getenv("BOT_TOKEN")
+# အကြံပြုထားသော နည်းလမ်း
+TOKEN = os.getenv("BOT_TOKEN") or '8551363037:AAEMOGKhJ8iNxrbYOtlk1s7uA_jqIolEmBs'
 bot = telebot.TeleBot(TOKEN, parse_mode="HTML")
 
 @app.route(f'/{TOKEN}', methods=['POST'])
@@ -47,10 +48,11 @@ def keep_alive():
 # --- End Flask Keep Alive ---
 
 # --- Configuration ---
-TOKEN = '8551363037:AAEMOGKhJ8iNxrbYOtlk1s7uA_jqIolEmBs' # Replace with your actual token
-OWNER_ID = 6873534451 # Replace with your Owner ID
-ADMIN_ID = 6873534451 # Replace with your Admin ID (can be same as Owner)
-YOUR_USERNAME = '@Zinko158' # Replace with your Telegram username (without the @)
+# line 31-33 ကိုပြင်ပါ:
+TOKEN = os.getenv("BOT_TOKEN") or '8551363037:AAEMOGKhJ8iNxrbYOtlk1s7uA_jqIolEmBs'
+OWNER_ID = 6873534451
+ADMIN_ID = 6873534451
+YOUR_USERNAME = '@Zinko158'
 UPDATE_CHANNEL = 'https://t.me/+NLb-9NFUSiY1YjVl' # Replace with your update channel link
 
 # Folder setup - using absolute paths
