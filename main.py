@@ -28,7 +28,7 @@ from threading import Thread
 app = Flask('')
 
 # အကြံပြုထားသော နည်းလမ်း
-TOKEN = os.getenv("BOT_TOKEN") or '8551363037:AAEMOGKhJ8iNxrbYOtlk1s7uA_jqIolEmBs'
+TOKEN = os.getenv("BOT_TOKEN") or '8391497992:AAGGCMLUrzPWtFkBgDvRTdRD0Faho9-V-N8'
 bot = telebot.TeleBot(TOKEN, parse_mode="HTML")
 
 @app.route(f'/{TOKEN}', methods=['POST'])
