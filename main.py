@@ -2866,6 +2866,7 @@ TELEGRAM_MODULES = {
     
     # Chemical plant engineering
     'pychemicalplantengineering': 'pychemicalplantengineering',
+}
     
 # --- End Automatic Package Installation & Script Running ---
 
