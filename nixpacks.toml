@@ -1,0 +1,15 @@
+[providers]
+# Python နဲ့ Node.js နှစ်ခုလုံးကို အသုံးပြုမယ်လို့ ကြေညာခြင်း
+providers = ["python", "node"]
+
+[phases.setup]
+# Version တွေ သတ်မှတ်ခြင်း
+nixPkgs = ["python311", "nodejs_20"]
+
+[phases.install]
+# Python packages တွေ install လုပ်ခြင်း
+cmds = ["python -m venv /opt/venv", ". /opt/venv/bin/activate", "pip install -r requirements.txt"]
+
+[start]
+# Bot ကို စတင် Run ခြင်း
+cmd = ". /opt/venv/bin/activate && python main.py"
