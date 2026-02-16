@@ -1,0 +1,11 @@
+services:
+  - type: worker
+    name: marco-file-host
+    runtime: docker
+    region: singapore
+    plan: free
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
+      - key: NODE_VERSION
+        value: 20.0.0
