@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
+import os
 import telebot
 import subprocess
-import os
 import zipfile
 import tempfile
 import shutil
@@ -9,16 +9,13 @@ from telebot import types
 import time
 from datetime import datetime, timedelta
 import logging
-# Removed unused telegram.* imports as we are using telebot consistently
-# from telegram import Update
-# from telegram.ext import Updater, CommandHandler, CallbackContext
 import psutil
 import sqlite3
 import threading
-import re # Added for regex matching in auto-install
-import sys # Added for sys.executable
+import re
+import sys
 import atexit
-import requests # For polling exceptions
+import requests
 
 # --- Flask Keep Alive ---
 from flask import Flask
@@ -28,26 +25,55 @@ app = Flask('')
 
 @app.route('/')
 def home():
-    return "I'm Marco File Host"
+    return "I'm Kelvin File Host"
 
 def run_flask():
-  # Make sure to run on port provided by environment or default to 8080
-  port = int(os.environ.get("PORT", 8080))
-  app.run(host='0.0.0.0', port=port)
+    port = int(os.environ.get("PORT", 8080))
+    app.run(host='0.0.0.0', port=port)
 
 def keep_alive():
     t = Thread(target=run_flask)
-    t.daemon = True # Allows program to exit even if this thread is running
+    t.daemon = True
     t.start()
     print("Flask Keep-Alive server started.")
 # --- End Flask Keep Alive ---
 
-# --- Configuration ---
-TOKEN = '8391497992:AAGbw-8TvJ9_TVOOSAaR9RNlU53XmcsuHvA' # Replace with your actual token
-OWNER_ID = 6873534451 # Replace with your Owner ID
-ADMIN_ID = 6873534451 # Replace with your Admin ID (can be same as Owner)
-YOUR_USERNAME = '@Zinko158' # Replace with your Telegram username (without the @)
-UPDATE_CHANNEL = 'https://t.me/+NLb-9NFUSiY1YjVl' # Replace with your update channel link
+# --- Configuration from Environment Variables ---
+# Get variables from Railway environment
+TOKEN = os.environ.get('BOT_TOKEN')
+OWNER_ID = os.environ.get('OWNER_ID')
+ADMIN_ID = os.environ.get('ADMIN_ID')
+YOUR_USERNAME = os.environ.get('YOUR_USERNAME')
+UPDATE_CHANNEL = os.environ.get('UPDATE_CHANNEL')
+
+# Validate required variables
+required_vars = {
+    'BOT_TOKEN': TOKEN,
+    'OWNER_ID': OWNER_ID,
+    'ADMIN_ID': ADMIN_ID,
+    'YOUR_USERNAME': YOUR_USERNAME,
+    'UPDATE_CHANNEL': UPDATE_CHANNEL
+}
+
+missing_vars = [var for var, value in required_vars.items() if not value]
+if missing_vars:
+    error_msg = f"Missing required environment variables: {', '.join(missing_vars)}"
+    print(error_msg)
+    raise ValueError(error_msg)
+
+# Convert IDs to integers
+try:
+    OWNER_ID = int(OWNER_ID)
+    ADMIN_ID = int(ADMIN_ID)
+except ValueError as e:
+    raise ValueError("OWNER_ID and ADMIN_ID must be valid integers") from e
+
+print("✅ Environment variables loaded successfully")
+print(f"Bot Token: {TOKEN[:10]}...")  # Only show first 10 chars for security
+print(f"Owner ID: {OWNER_ID}")
+print(f"Admin ID: {ADMIN_ID}")
+print(f"Username: {YOUR_USERNAME}")
+print(f"Update Channel: {UPDATE_CHANNEL}")
 
 # Folder setup - using absolute paths
 BASE_DIR = os.path.abspath(os.path.dirname(__file__)) # Get script's directory
